@@ -7,7 +7,7 @@ import { User as PrismaUser } from '@prisma/client';
 import { SignInFormSchema } from '@/resolvers/forms/sign-in-form.resolver';
 
 export const authOptions: NextAuthOptions = {
-  debug: true,
+  debug: process.env.NODE_ENV !== "production",
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60,
