@@ -32,6 +32,7 @@ test.afterAll(async () => {
 
 test('Sign in user successfully', async () => {
   await page.goto('http://localhost:3000/');
+  await page.reload();
   await page.getByRole('button', { name: 'Sign in' }).click();
   await page.getByPlaceholder('email...').click();
   await page.getByPlaceholder('email...').fill(userEmail);
@@ -45,8 +46,7 @@ test('Sign in user successfully', async () => {
 
 
 test('Sign out user successfully', async () => {
-  await page.goto('http://localhost:3000/');
-  await page.getByTestId('profile-dropdown-trigger')
+  await page.getByTestId('profile-dropdown-trigger').click()
   await page.getByRole('menuitem', { name: 'Logout' }).click();
   await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
 });
