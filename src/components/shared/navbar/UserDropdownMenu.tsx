@@ -26,7 +26,7 @@ export default function UserDropdownMenu() {
             className="size-10 rounded-full border"
           />
           <AvatarFallback>
-            <User />
+            <User data-testid={'profile-dropdown-trigger'} />
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -34,7 +34,11 @@ export default function UserDropdownMenu() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {profileLinks.map((link) => (
-          <DropdownMenuItem asChild key={link.label} className="cursor-pointer">
+          <DropdownMenuItem
+            asChild
+            key={link.label}
+            className="cursor-pointer"
+          >
             <Link href={link.href}>{link.label}</Link>
           </DropdownMenuItem>
         ))}

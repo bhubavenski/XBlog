@@ -55,7 +55,7 @@ export default function BlogHomepage() {
                         <Image
                           src="/medium-thumbnail.png"
                           alt={`Featured post ${i}`}
-                          layout="fill"
+                          fill
                           className="object-cover w-full h-full transition-opacity group-hover:opacity-80"
                         />
                       </div>

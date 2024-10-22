@@ -22,16 +22,20 @@ export async function registerUser(body: SignUpValues) {
   const { email, password, username } = validatedFields.data;
 
   try {
+
     const existsUser = await UserRepo.findUnique({
       where: {
         email: email,
       },
     });
+    console.log(existsUser)
 
     if (existsUser) {
       return { error: 'This user already exists' };
     }
+
     const hashedPass = await bcrypt.hash(password, 10);
+
 
     await UserRepo.create({
       data: {

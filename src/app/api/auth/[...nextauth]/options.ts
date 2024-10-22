@@ -20,8 +20,9 @@ export const authOptions: NextAuthOptions = {
         if (!credentials) {
           throw new Error('No credentials were found');
         }
+        // console.log({credentials})
         const validatedFields = SignInFormSchema.safeParse(credentials);
-
+        // console.log(validatedFields.error)
         if (!validatedFields.success) {
           throw new Error('Credentials are not in valid format');
         }
@@ -67,7 +68,7 @@ export const authOptions: NextAuthOptions = {
       } else {
         token.exp = Math.floor(Date.now() / 1000) + 24 * 60;
       }
-      console.log({ token });
+      // console.log({ token });
 
       return token;
     },
