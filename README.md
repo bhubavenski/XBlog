@@ -26,7 +26,7 @@ This project aims to be a collaborative and beginner-friendly environment for co
 - **Auth Solution**: [NextAuth.js](https://next-auth.js.org/getting-started/introduction)
 - **Styling**: [ShadCN/UI](https://shadcn.dev/)
 - **Testing**
-  - Component & unit & integration testing: [Vite](https://vitest.dev/), [Testing Library](https://testing-library.com/), [MSW](https://mswjs.io/)
+  - Component & unit & integration testing: [Vitest](https://vitest.dev/), [Testing Library](https://testing-library.com/), [MSW](https://mswjs.io/)
   - e2e testing [Playwright](https://playwright.dev/)
 
 ## Tasks list
