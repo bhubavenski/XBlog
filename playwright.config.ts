@@ -14,6 +14,8 @@ const baseURL = `http://localhost:${PORT}`;
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  globalSetup: './tests/global-setup.ts',
+
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -33,6 +35,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
     // screenshot: 'on',
+    video: 'on-first-retry',
   },
 
   /* Configure projects for major browsers */
@@ -53,10 +56,10 @@ export default defineConfig({
     // },
   ],
 
-  // webServer: {
-  //   command: "pnpm dev",
-  //   url: baseURL,
-  //   timeout: 120 * 1000,
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  webServer: {
+    command: 'pnpm dev',
+    url: baseURL,
+    timeout: 120 * 1000,
+    reuseExistingServer: !process.env.CI,
+  },
 });

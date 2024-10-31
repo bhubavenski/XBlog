@@ -1,10 +1,16 @@
 'use server';
 
 import { UserRepo } from '@/repository/user.repo';
-import { getErrorMessage } from '../utils';
+import { getErrorMessage, validateSchema } from '../utils';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
+import {
+  SignUpValues,
+  SignUpSchema,
+} from '@/resolvers/forms/sign-up-form.resolver';
+import bcrypt from 'bcryptjs';
 
+// FP variant
 export const deleteUser = async () => {
   const session = await getServerSession(authOptions);
 
