@@ -29,7 +29,7 @@ This project aims to be a collaborative and beginner-friendly environment for co
   - Component & unit & integration testing: [Vitest](https://vitest.dev/), [Testing Library](https://testing-library.com/), [MSW](https://mswjs.io/)
   - e2e testing [Playwright](https://playwright.dev/)
 
-## Tasks list
+## To do list
 - [ ] add subscription model, where a user can subscribe to author and get notified everytime when this author creates a new post
 - [ ] add push notifications
 - [ ] finish the "change language" feature
