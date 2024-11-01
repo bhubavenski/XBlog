@@ -33,7 +33,7 @@ export default function NotificationsForm() {
   });
 
   if (status === 'loading') {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
   if (!data) {
@@ -46,6 +46,12 @@ export default function NotificationsForm() {
     <Card>
       <CardHeader>
         <CardTitle>Notifications</CardTitle>
+        {/* <p className="text-muted-foreground font-light">
+          Not implemented feature
+        </p> */}
+        <p className="self-start px-1 bg-gray-300/40 text-muted-foreground font-light">
+          Not implemented feature
+        </p>
         <CardDescription>Manage how you receive notifications</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

@@ -23,7 +23,7 @@ const createUserInDbSelect = {
 };
 
 const test = base.extend<{
-  createUserTemplate: SignUpValues;
+  createUserTemplate: () => SignUpValues;
   createUserInDb: (args?: CreateUserInDbArgs) => Promise<
     Prisma.UserGetPayload<{ select: typeof createUserInDbSelect }> & {
       password: string;
@@ -35,25 +35,23 @@ const test = base.extend<{
     const email = faker.internet.email();
     const username = faker.internet.username();
     const password = faker.internet.password();
-    await use({
+    await use(() => ({
       email,
       username,
       password,
-    });
+    }));
   },
   createUserInDb: async ({ createUserTemplate }, use) => {
-    const user = createUserTemplate;
+    const user = createUserTemplate();
     let userId: string | undefined;
-    let deleteUserAfter = true;
+    let deleteUserAfter;
 
     await use(async (args) => {
-      //if args.password is provided then use it, but if not, then use fake one from createUserTemplate
-      const password = args?.password ?? createUserTemplate.password;
+      //if args.password is provided then use it, but if not, then use fake one from createUserTemplate()
+      const password = args?.password ?? user.password;
 
-      if(args?.deleteUserAfter) {
-        deleteUserAfter = args.deleteUserAfter
-      }
-      
+      deleteUserAfter = args?.deleteUserAfter ?? false;
+
       const myUser = await db.user.create({
         data: {
           email: args?.email ?? user.email,

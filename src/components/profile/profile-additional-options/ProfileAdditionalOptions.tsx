@@ -41,14 +41,14 @@ export default function ProfileAdditionalOptions({
           <HelpCircle className="mr-2 h-4 w-4" />
           <div className=" flex gap-2">
             <span>Help Center</span>
-            <span className=" text-muted-foreground font-light">
+            <span className="text-muted-foreground font-light">
               Not implemented feature
             </span>
           </div>
         </Button>
         <Button
           variant="outline"
-          className="w-full justify-start"
+          className="w-full justify-start hover:bg-destructive/15 hover:text-destructive"
           onClick={() => handleDelete(toast)}
         >
           <Trash2 className="mr-2 h-4 w-4" />

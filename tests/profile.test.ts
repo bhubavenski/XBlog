@@ -11,9 +11,7 @@ test('Delete user and redirect to signin', async ({
 }) => {
   await context.clearCookies();
 
-  const { email, password } = await createUserInDb({
-    deleteUserAfter: false
-  });
+  const { email, password } = await createUserInDb();
 
   await page.goto('http://localhost:3000/');
 
@@ -31,4 +29,58 @@ test('Delete user and redirect to signin', async ({
   ).toBeVisible();
   await page.getByRole('button', { name: 'Delete Account' }).click();
   await expect(page).toHaveURL('http://localhost:3000/signin');
+});
+
+test('User can update profile info', async ({ page }) => {
+  const firstName = 'fakeFirstName';
+  const lastName = 'fakeLastName';
+  const username = 'fakeUsername';
+  const bio = 'fakeBio';
+
+  await page.goto('http://localhost:3000/');
+  await page.getByTestId('profile-dropdown-trigger').click();
+  await page.getByRole('menuitem', { name: 'settings' }).click();
+
+  await page.getByLabel('First name').fill(firstName);
+  await page.getByLabel('Last name').fill(lastName);
+  await page.getByLabel('Username').fill(username);
+  await page.getByLabel('Bio').fill(bio);
+
+  await page.getByRole('button', { name: 'Update' }).click();
+
+  await page.reload();
+  
+  await expect(page.getByLabel('First name')).toHaveValue(firstName);
+  await expect(page.getByLabel('Last name')).toHaveValue(lastName);
+  await expect(page.getByLabel('Username')).toHaveValue(username);
+  await expect(page.getByLabel('Bio')).toHaveValue(bio);
+});
+
+test('test', async ({ page }) => {
+  const currentPassword = 'fakePass';
+  const newPassword = 'newFakePass';
+
+  await page.goto('http://localhost:3000/');
+
+  await page.getByTestId('profile-dropdown-trigger').click();
+  await page.getByRole('menuitem', { name: 'settings' }).click();
+  await page.getByRole('tab', { name: 'Security' }).click();
+
+  await page.getByPlaceholder('currentPassword').fill(currentPassword);
+  await page.getByPlaceholder('newPassword').fill(newPassword);
+  await page.getByPlaceholder('confirmPassword').fill(newPassword);
+
+  await page.getByRole('button', { name: 'Update Security Credentials' }).click();
+  
+  await expect(page.getByText('Successfully updated profile')).toBeVisible();
+
+  await page.getByTestId('profile-dropdown-trigger').click();
+  await page.getByRole('menuitem', { name: 'Logout' }).click();
+
+  await page.getByPlaceholder('email...').fill('fakeUser@gmail.com');
+  await page.getByPlaceholder('password...').fill(newPassword);
+
+  await page.getByRole('main').getByRole('button', { name: 'Sign in' }).click();
+  
+  await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible();
 });

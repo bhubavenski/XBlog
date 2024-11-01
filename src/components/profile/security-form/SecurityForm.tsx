@@ -17,8 +17,8 @@ import {
   FormControl,
   FormMessage,
   Form,
-} from '../ui/form';
-import Spinner from '../shared/Spinner';
+} from '../../ui/form';
+import Spinner from '../../shared/Spinner';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 import {
@@ -26,8 +26,8 @@ import {
   SecurityValues,
 } from '@/resolvers/forms/security-form.resolver';
 import { zodResolver } from '@hookform/resolvers/zod';
-import ErrorMessage from '../auth/ErrorMessage';
-import SuccessMessage from '../auth/SuccessMessage';
+import ErrorMessage from '../../auth/ErrorMessage';
+import SuccessMessage from '../../auth/SuccessMessage';
 import { getErrorMessage } from '@/lib/utils';
 import { useUpdateUserPassMutation } from '@/lib/features/users/users.slice';
 import { Eye, EyeOff } from 'lucide-react';
@@ -105,7 +105,7 @@ export default function SecurityForm() {
                         type={
                           fieldsVisibility[field.name] ? 'text' : 'password'
                         }
-                        className="pr-10" // добави пространство отдясно за иконата
+                        className="pr-10"
                       />
                       <button
                         type="button"

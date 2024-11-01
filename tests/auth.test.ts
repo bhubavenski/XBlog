@@ -2,7 +2,7 @@ import { db } from '@/prisma/db';
 import { expect, test } from './playwrgiht-utils';
 
 test('Sign up user successfully', async ({ page, createUserTemplate }) => {
-  const { email, username, password } = createUserTemplate;
+  const { email, username, password } = createUserTemplate();
   try {
     await page.goto('http://localhost:3000/');
 
@@ -20,7 +20,7 @@ test('Sign up user successfully', async ({ page, createUserTemplate }) => {
       .click();
     await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible();
   } finally {
-    db.user.delete({
+   await db.user.delete({
       where: {
         email,
       },
@@ -29,7 +29,9 @@ test('Sign up user successfully', async ({ page, createUserTemplate }) => {
 });
 
 test('Sign in user successfully', async ({ page, createUserInDb }) => {
-  const { email, password } = createUserInDb;
+  const { email, password } = await createUserInDb({
+    deleteUserAfter: true
+  });
 
   await page.goto('http://localhost:3000/');
 

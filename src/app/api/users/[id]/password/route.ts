@@ -18,7 +18,6 @@ export async function PATCH(
   }
 
   const body = await req.json();
-  // console.log(body);
 
   const validatedFields = validateSchema(SecuritySchema, body);
 
@@ -28,8 +27,9 @@ export async function PATCH(
       { status: 400 } // 400 Bad Request
     );
   }
-  const { currentPassword } = validatedFields.data;
-  // console.log({ currentPassword });
+
+  const { currentPassword, newPassword } = validatedFields.data;
+
   try {
     const userPass = await UserRepo.findUnique({
       where: {
@@ -52,9 +52,9 @@ export async function PATCH(
     if (!isTheSamePass) {
       return NextResponse.json({ error: 'Wrong credentials' }, { status: 404 });
     }
-    const newPass = await bcrypt.hash(currentPassword, 10);
+    const newPass = await bcrypt.hash(newPassword, 10);
 
-    await UserRepo.update({
+    const newUser = await UserRepo.update({
       where: {
         id: userId,
       },
@@ -62,6 +62,7 @@ export async function PATCH(
         password: newPass,
       },
     });
+
     return NextResponse.json(
       { message: 'Success updating credentials' },
       { status: 200 }
