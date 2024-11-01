@@ -34,7 +34,6 @@ export async function GET(
         { status: 404 } // 404 Not Found
       );
     }
-
     return NextResponse.json(user, { status: 200 }); // 200 OK
   } catch (error) {
     const message = getErrorMessage(error);

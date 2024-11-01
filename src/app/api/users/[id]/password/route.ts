@@ -18,7 +18,7 @@ export async function PATCH(
   }
 
   const body = await req.json();
-  console.log(body);
+  // console.log(body);
 
   const validatedFields = validateSchema(SecuritySchema, body);
 
@@ -29,7 +29,7 @@ export async function PATCH(
     );
   }
   const { currentPassword } = validatedFields.data;
-  console.log({ currentPassword });
+  // console.log({ currentPassword });
   try {
     const userPass = await UserRepo.findUnique({
       where: {

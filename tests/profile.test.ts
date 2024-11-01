@@ -1,25 +1,28 @@
-import { db } from '@/prisma/db';
 import { expect, test } from './playwrgiht-utils';
-import { encode } from 'next-auth/jwt';
-import { signIn } from 'next-auth/react';
 
 test.use({
   storageState: './auth.json',
 });
-declare global {
-  interface Window {
-    nextauth: {
-      signIn: (provider: string, options: any) => Promise<{ ok: boolean; url?: string }>;
-    }
-  }
-}
-test('Delete user and redirect to signin', async ({ page, createUserInDb, context, login }) => {
+
+test('Delete user and redirect to signin', async ({
+  page,
+  context,
+  createUserInDb,
+}) => {
+  await context.clearCookies();
+
+  const { email, password } = await createUserInDb({
+    deleteUserAfter: false
+  });
+
   await page.goto('http://localhost:3000/');
 
-  context.clearCookies();
+  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.getByPlaceholder('email...').fill(email);
+  await page.getByPlaceholder('password...').fill(password);
+  await page.getByRole('main').getByRole('button', { name: 'Sign in' }).click();
 
-  login()
-  
+  await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible();
 
   await page.getByTestId('profile-dropdown-trigger').click();
   await page.getByRole('menuitem', { name: 'settings' }).click();

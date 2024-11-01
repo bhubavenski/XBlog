@@ -41,14 +41,14 @@ export const authOptions: NextAuthOptions = {
         if (!user) {
           throw new Error("This user doesn't exists");
         }
-        console.log({
-          userPassword: user.password,
-          password
-        })
+        // console.log({
+        //   userPassword: user.password,
+        //   password
+        // })
         const isTheSamePass = await bcrypt.compare(password, user.password);
         
         if (!isTheSamePass) {
-          console.log('she grumne!!!!!!')
+          // console.log('she grumne!!!!!!')
           throw new Error('Wrong credentials');
         } 
 

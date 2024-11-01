@@ -56,6 +56,7 @@ export default function PersonalInfoForm() {
   const [updateUserData, { isLoading: isUpdateUserDataLoading }] =
     useUpdateUserDataMutation();
   const userId = data?.user?.sub;
+  console.log({userId})
 
   const { data: userData, isLoading } = useGetUserDataQuery(userId!, {
     skip: !userId,
