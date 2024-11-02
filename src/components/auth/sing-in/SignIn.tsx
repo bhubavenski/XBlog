@@ -102,7 +102,7 @@ export default function SignInForm({ onSubmit }: SignInFormProps) {
         router.push('/');
       }, 500);
 
-      return () => clearTimeout(timeout); 
+      return () => clearTimeout(timeout);
     }
   }, [success, router]);
 
@@ -178,7 +178,10 @@ export default function SignInForm({ onSubmit }: SignInFormProps) {
                   <FormControl>
                     <Checkbox
                       checked={field.value}
-                      onCheckedChange={field.onChange}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked);
+                        console.log(field.value)
+                      }}
                     />
                   </FormControl>
                   <FormLabel>Remember me</FormLabel>

@@ -11,7 +11,9 @@ test('Delete user and redirect to signin', async ({
 }) => {
   await context.clearCookies();
 
-  const { email, password } = await createUserInDb();
+  const { email, password } = await createUserInDb({
+    deleteUserAfter: false
+  });
 
   await page.goto('http://localhost:3000/');
 
