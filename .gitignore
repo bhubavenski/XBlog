@@ -9,7 +9,7 @@
 # testing
 /coverage
 /playwright/auth
-auth.json
+/auth.json
 
 # next.js
 /.next/
