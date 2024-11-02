@@ -93,7 +93,7 @@ const test = base.extend<{
       .getByRole('main')
       .getByRole('button', { name: 'Sign in' })
       .click();
-
+    await expect(page.getByText('Successfully signed in')).toBeVisible();
     await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible();
 
     // await context.storageState({
