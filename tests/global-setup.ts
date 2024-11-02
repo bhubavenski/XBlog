@@ -9,11 +9,11 @@ export default async function globalSetup() {
 
   await page.pause();
 
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.getByRole('button', { name: 'Sign in' }).click();6
 
   await page.getByPlaceholder('email...').fill('fakeUser@gmail.com');
-  await page.getByPlaceholder('password...').fill('fakePass');
-  
+  await page.getByPlaceholder('password...').fill('newFakePass');
+
   await page.getByRole('main').getByRole('button', { name: 'Sign in' }).click();
 
   await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible();

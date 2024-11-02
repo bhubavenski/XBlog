@@ -20,7 +20,7 @@ test('Sign up user successfully', async ({ page, createUserTemplate }) => {
       .click();
     await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible();
   } finally {
-   await db.user.delete({
+    await db.user.delete({
       where: {
         email,
       },
@@ -30,7 +30,7 @@ test('Sign up user successfully', async ({ page, createUserTemplate }) => {
 
 test('Sign in user successfully', async ({ page, createUserInDb }) => {
   const { email, password } = await createUserInDb({
-    deleteUserAfter: true
+    deleteUserAfter: true,
   });
 
   await page.goto('http://localhost:3000/');

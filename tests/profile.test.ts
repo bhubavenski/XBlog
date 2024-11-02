@@ -49,15 +49,16 @@ test('User can update profile info', async ({ page }) => {
   await page.getByRole('button', { name: 'Update' }).click();
 
   await page.reload();
-  
+
   await expect(page.getByLabel('First name')).toHaveValue(firstName);
   await expect(page.getByLabel('Last name')).toHaveValue(lastName);
   await expect(page.getByLabel('Username')).toHaveValue(username);
   await expect(page.getByLabel('Bio')).toHaveValue(bio);
 });
 
-test('test', async ({ page }) => {
-  const currentPassword = 'fakePass';
+test.only('User can update their password', async ({ page, login }) => {
+  const { email, password } = login();
+  const currentPassword = password;
   const newPassword = 'newFakePass';
 
   await page.goto('http://localhost:3000/');
@@ -70,17 +71,22 @@ test('test', async ({ page }) => {
   await page.getByPlaceholder('newPassword').fill(newPassword);
   await page.getByPlaceholder('confirmPassword').fill(newPassword);
 
-  await page.getByRole('button', { name: 'Update Security Credentials' }).click();
-  
+  await page
+    .getByRole('button', { name: 'Update Security Credentials' })
+    .click();
+
   await expect(page.getByText('Successfully updated profile')).toBeVisible();
 
   await page.getByTestId('profile-dropdown-trigger').click();
   await page.getByRole('menuitem', { name: 'Logout' }).click();
+  await expect(page).toHaveURL('http://localhost:3000/signin');
 
-  await page.getByPlaceholder('email...').fill('fakeUser@gmail.com');
+  await page.getByPlaceholder('email...').fill(email);
   await page.getByPlaceholder('password...').fill(newPassword);
 
   await page.getByRole('main').getByRole('button', { name: 'Sign in' }).click();
-  
-  await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible();
+
+  await expect(page).toHaveURL('http://localhost:3000/');
+
+  await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible({ timeout: 10000 });
 });

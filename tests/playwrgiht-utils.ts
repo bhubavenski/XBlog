@@ -29,7 +29,10 @@ const test = base.extend<{
       password: string;
     }
   >;
-  login: () => void;
+  login: () => {
+    email: string;
+    password: string;
+  };
 }>({
   createUserTemplate: async ({}, use) => {
     const email = faker.internet.email();
@@ -50,7 +53,7 @@ const test = base.extend<{
       //if args.password is provided then use it, but if not, then use fake one from createUserTemplate()
       const password = args?.password ?? user.password;
 
-      deleteUserAfter = args?.deleteUserAfter ?? false;
+      deleteUserAfter = args?.deleteUserAfter ?? true;
 
       const myUser = await db.user.create({
         data: {
@@ -74,28 +77,30 @@ const test = base.extend<{
       });
     }
   },
-  // login: async ({ createUserInDb, page, context }, use) => {
-  //   await context.clearCookies();
+  login: async ({ createUserInDb, page, context }, use) => {
+    await context.clearCookies();
 
-  //   const { email, password } = await createUserInDb();
+    const { email, password } = await createUserInDb({
+      deleteUserAfter: true,
+    });
 
-  //   await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/');
 
-  //   await page.getByRole('button', { name: 'Sign in' }).click();
-  //   await page.getByPlaceholder('email...').fill(email);
-  //   await page.getByPlaceholder('password...').fill(password);
-  //   await page
-  //     .getByRole('main')
-  //     .getByRole('button', { name: 'Sign in' })
-  //     .click();
+    await page.getByRole('button', { name: 'Sign in' }).click();
+    await page.getByPlaceholder('email...').fill(email);
+    await page.getByPlaceholder('password...').fill(password);
+    await page
+      .getByRole('main')
+      .getByRole('button', { name: 'Sign in' })
+      .click();
 
-  //   await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible();
+    await expect(page.getByTestId('profile-dropdown-trigger')).toBeVisible();
 
-  //   await context.storageState({
-  //     path: './new-session',
-  //   });
-  //   await use(() => {});
-  // },
+    // await context.storageState({
+    //   path: './new-session',
+    // });
+    await use(() => ({ email, password }));
+  },
 });
 
 export * from '@playwright/test';
