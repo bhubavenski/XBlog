@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -89,14 +89,22 @@ export default function SignInForm({ onSubmit }: SignInFormProps) {
         setError('Error while signing in');
         return;
       }
-
       setSuccess('Successfully signed in');
-      router.push('/');
     } catch (error) {
       console.error(error);
       setError('Error occurred while signing in');
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      const timeout = setTimeout(() => {
+        router.push('/');
+      }, 500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [success, router]);
 
   const handleSubmit: SubmitHandler<SignInFormSchemaValues> = async (data) => {
     await (onSubmit
@@ -170,7 +178,10 @@ export default function SignInForm({ onSubmit }: SignInFormProps) {
                   <FormControl>
                     <Checkbox
                       checked={field.value}
-                      onCheckedChange={field.onChange}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked);
+                        console.log(field.value)
+                      }}
                     />
                   </FormControl>
                   <FormLabel>Remember me</FormLabel>

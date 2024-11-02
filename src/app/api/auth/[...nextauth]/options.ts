@@ -20,8 +20,9 @@ export const authOptions: NextAuthOptions = {
         if (!credentials) {
           throw new Error('No credentials were found');
         }
+        // console.log({credentials})
         const validatedFields = SignInFormSchema.safeParse(credentials);
-
+        // console.log(validatedFields.error)
         if (!validatedFields.success) {
           throw new Error('Credentials are not in valid format');
         }
@@ -40,10 +41,16 @@ export const authOptions: NextAuthOptions = {
         if (!user) {
           throw new Error("This user doesn't exists");
         }
-
+        // console.log({
+        //   userPassword: user.password,
+        //   password
+        // })
         const isTheSamePass = await bcrypt.compare(password, user.password);
-
-        if (!isTheSamePass) throw new Error('Wrong credentials');
+        
+        if (!isTheSamePass) {
+          // console.log('she grumne!!!!!!')
+          throw new Error('Wrong credentials');
+        } 
 
         user.rememberMe = rememberMe;
         return user;
@@ -67,7 +74,7 @@ export const authOptions: NextAuthOptions = {
       } else {
         token.exp = Math.floor(Date.now() / 1000) + 24 * 60;
       }
-      console.log({ token });
+      // console.log({ token });
 
       return token;
     },

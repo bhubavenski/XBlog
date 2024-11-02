@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import AuthWrapper from './AuthWrapper';
 import { ModeToggle } from './ModeToggle';
 import NavMenu from './NavMenu';
@@ -14,7 +15,7 @@ export default function Navbar() {
 
           {/* Middle: Brand name */}
           <div className="flex-1 flex justify-center">
-            <span className="font-bold text-xl text-primary">XBlog</span>
+            <Link className="font-bold text-xl text-primary" href='/'>XBlog</Link>
           </div>
 
           {/* Right side: User actions */}

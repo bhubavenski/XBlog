@@ -1,7 +1,7 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import React from 'react';
 import PersonalInfoForm from './personal-info-form/PersonalInfoForm';
-import SecurityForm from './SecurityForm';
+import SecurityForm from './security-form/SecurityForm';
 import NotificationsForm from './notifications-form/NotificationsForm';
 
 export default function ProfileTabs() {

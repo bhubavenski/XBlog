@@ -13,10 +13,9 @@ export async function registerUser(body: SignUpValues) {
   const validatedFields = validateSchema(SignUpSchema, body);
 
   if ('error' in validatedFields) {
-    return NextResponse.json(
-      { error: validatedFields.error },
-      { status: 400 } // 400 Bad Request
-    );
+    return {
+      error: validatedFields.error,
+    };
   }
 
   const { email, password, username } = validatedFields.data;
@@ -27,10 +26,12 @@ export async function registerUser(body: SignUpValues) {
         email: email,
       },
     });
+    console.log(existsUser);
 
     if (existsUser) {
       return { error: 'This user already exists' };
     }
+
     const hashedPass = await bcrypt.hash(password, 10);
 
     await UserRepo.create({
