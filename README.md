@@ -80,7 +80,7 @@ npm install
 npm run dev
 ```
 5. **Access the app:** The application should be running at http://localhost:3000.
-
+  **To sign in the app use**: testUser@gmail.com | 1111
 
 ## Security
 The app is protected from SQL injections by using [Prisma](https://www.prisma.io/orm) as an ORM, which uses parameterized queries by default, reducing the risk of SQL injections and also validating the input
